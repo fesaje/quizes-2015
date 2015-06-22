@@ -12,11 +12,18 @@ router.get('/author', function(req, res) {
   res.render('author', { title: 'Quiz' });
 });
 
+router.get('/search', function(req, res) {
+  res.render('search', { title: 'Quiz' });
+});
+
 
 router.param('quizId', quizController.load);
 
-router.get('/quizes',                      quizController.index);
-router.get('/quizes/:quizId(\\d+)',        quizController.show);
-router.get('/quizes/:quizId(\\d+)/answer', quizController.answer);
+router.get('/quizes',                      	quizController.index);
+router.get('/quizes/:quizId(\\d+)',        	quizController.show);
+router.get('/quizes/:quizId(\\d+)/answer', 	quizController.answer);
+router.get('/quizes/search', 				quizController.search);
+
+
 
 module.exports = router;

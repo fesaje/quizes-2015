@@ -26,6 +26,14 @@ var models = require('../models/models.js');
 	).catch(function(error) {next(error);}) 
  };
   
+ 
+ exports.search = function(req, res) {
+	 models.Quiz.findAll({where:{pregunta:{like: "%" + req.query.search.replace(' ','%') + "%"}}}).then(function(quizes){
+		 res.render('quizes/search.ejs', {quizes: quizes, busqueda: req.query.search});
+	 }
+	).catch(function(error) {next(error);}) 
+ }; 
+ 
  // GET /quizes/:id
 exports.show = function(req, res) {
 	res.render('quizes/show', {quiz: req.quiz});

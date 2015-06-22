@@ -1,0 +1,7 @@
+<p>Se ha(n) encontrado <%= quizes.length %> pregunta(s) con la búsqueda: <%= busqueda %></p>
+
+<table>
+<% var i; for (i=0; i < quizes.length; i++) { %>        
+   <tr><td><a href="./<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td></tr> 
+<% } %>
+</table>
