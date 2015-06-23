@@ -26,6 +26,8 @@ var models = require('../models/models.js');
 	).catch(function(error) {next(error);}) 
  };
   
+  
+  // GET /quizes/search
  
  exports.search = function(req, res) {
 	 models.Quiz.findAll({where:{pregunta:{like: "%" + req.query.search.replace(' ','%') + "%"}}}).then(function(quizes){
@@ -47,3 +49,20 @@ exports.answer = function(req, res) {
 	}
 	res.render('quizes/answer', {quiz: req.quiz, respuesta:resultado});
  };
+ 
+ // GET /quizes/new
+ 
+ exports.new = function(req, res) {
+	var quiz = models.Quiz.build(
+	 {pregunta: "Pregunta", respuesta: "Respuesta"}
+		);
+	res.render('quizes/new', {quiz: quiz});
+ }
+ 
+ exports.create = function (req, res) {
+	 var quiz = models.Quiz.build (req.body.quiz); 
+	 
+	 quiz.save({fields: ["pregunta", "respuesta"]}).then(function(){
+		 res.redirect('/quizes');
+	 })
+};
