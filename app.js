@@ -29,14 +29,27 @@ app.use(methodOverride('_method'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(function (req, res, next){
+app.use(function(req, res, next) {
 
-	if(!req.path.match(/\/login|\/logout/)) {
-		req.session.redir = req.path;		
-	}
-	res.locals.session = req.session;
-	next();
+  if (!req.path.match(/\/login|\/logout/)) {
+    req.session.redir = req.path;
+  }
+
+  res.locals.session = req.session;
+  next();
 });
+
+app.use(function(req, res, next) {
+if (req.session.user) {
+	if (Date.now() - req.session.user.tiempoSesion > 120*1000) {
+		delete req.session.user;
+	} else {
+		req.session.user.tiempoSesion = Date.now();
+	}
+	}
+	next();
+	}
+);
 
 app.use('/', routes);
 

@@ -30,7 +30,7 @@ exports.create = function(req, res) {
             return;
         }
 
-        req.session.user = {id:user.id, username:user.username};
+        req.session.user = {id:user.id, username:user.username, tiempoSesion: Date.now() };
 
         res.redirect(req.session.redir.toString());// redirección a path anterior a login
     });
